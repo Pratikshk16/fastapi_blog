@@ -8,3 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
+
+
+# Ignore uploaded profile pictures
+media/
+
+# Local database
+blog.db
