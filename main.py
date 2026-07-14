@@ -132,7 +132,6 @@ async def account_page(request: Request):
     )
 
 
-
 @app.exception_handler(StarletteHTTPException)
 async def general_http_exception_handler(
     request: Request,
