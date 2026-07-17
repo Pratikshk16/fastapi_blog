@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
+        extra="ignore",
     )
 
     secret_key: SecretStr
@@ -16,5 +17,18 @@ class Settings(BaseSettings):
 
     posts_per_page: int = 10
 
+    reset_token_expire_minutes: int = 60
+
+    mail_server: str = "localhost"
+    mail_port: int = 587
+    mail_username: str = ""
+    mail_password: SecretStr = SecretStr("")
+    mail_from: str = "noreply@example.com"
+    mail_use_tls: bool = True
+
+    frontend_url: str = "http://localhost:8000"
+
+print(__file__)
+print(Settings.model_fields.keys())
 
 settings = Settings()  # type: ignore[call-arg] # Loaded from .env file
