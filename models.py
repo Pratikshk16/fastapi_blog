@@ -29,6 +29,7 @@ class User(Base):
     reset_tokens: Mapped[list[PasswordResetToken]] = relationship(
     back_populates="user",
     cascade="all, delete-orphan",
+
     )
 
 
@@ -54,6 +55,8 @@ class Post(Base):
         DateTime(timezone=True),
         default=lambda: datetime.now(UTC),
     )
+    likes: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
+
 
     author: Mapped[User] = relationship(back_populates="posts")
 
