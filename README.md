@@ -86,27 +86,19 @@ A production-oriented full-stack blogging platform built with **FastAPI**, **Pos
 
 # 📸 Screenshots
 
-## Profile Picture Upload + AWS S3
+## 📸 Profile Picture Upload + AWS S3
 
-After a profile picture is uploaded, the application:
-1. Validates the image.
-2. Resizes it to 300×300.
-3. Converts it to JPEG.
-4. Uploads it to AWS S3.
-5. Updates the user's profile.
-6. Deletes the previous profile image from S3.
+After a profile picture is uploaded, the application automatically:
 
-> Save your uploaded screenshot as:
+- ✅ Validates the image
+- ✅ Resizes it to **300×300**
+- ✅ Converts it to JPEG
+- ✅ Uploads it to **AWS S3**
+- ✅ Updates the user's profile
+- ✅ Deletes the previous profile picture from S3
 
-```text
-assets/images/s3-profile-upload.png
-```
+![Profile Picture Upload + AWS S3](assets/images/s3-profile-upload.png)
 
-Then GitHub will render it automatically:
-
-```markdown
-![AWS S3 Upload](assets/images/s3-profile-upload.png)
-```
 
 ---
 
