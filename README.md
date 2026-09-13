@@ -9,11 +9,20 @@
 ![Moto](https://img.shields.io/badge/AWS%20Mocking-Moto-orange)
 ![Alembic](https://img.shields.io/badge/Migrations-Alembic-red)
 ![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
+![Render](https://img.shields.io/badge/Deployed%20on-Render-purple)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
 A production-oriented full-stack blogging platform built with **FastAPI**, **PostgreSQL**, **SQLAlchemy (Async)**, **AWS S3**, and **Jinja2**. The application combines REST APIs with server-rendered pages and includes JWT authentication, password reset via email, profile image management, database migrations, automated tests, health monitoring, security headers, and a production-ready Docker image.
 
-> ✅ **Status:** Complete. The project has been fully implemented, tested, containerized with Docker, and prepared for production deployment.
+> ✅ **Status:** Complete and publicly deployed. The project has been fully implemented, tested, containerized with Docker, and deployed to **Render** using its free web-service tier. PostgreSQL is hosted on **Neon** and profile images are stored in **AWS S3**.
+
+## 🌐 Live Demo
+
+**Live Application:** https://fastapi-blog-swra.onrender.com/
+
+The deployed application supports registration, login, post creation and management, profile management, profile-picture uploads, REST APIs, and the other implemented blog functionality.
+
+> ⚠️ **Render Free Tier:** The live application uses Render's free web-service tier. The instance spins down after **15 minutes of inactivity**, so the first request after a period of inactivity can take longer while the service starts again. This is expected free-tier behaviour.
 
 ---
 
@@ -96,7 +105,16 @@ A production-oriented full-stack blogging platform built with **FastAPI**, **Pos
 - Runs the application as a non-root user
 - Configurable `PORT` environment variable
 - Proxy header support for reverse-proxy deployments
-- Containerised FastAPI application successfully deployed with Docker
+- Containerized FastAPI application successfully deployed with Docker
+
+## Deployment
+- Dockerized application deployed on **Render**
+- Public HTTPS application URL
+- Production environment variables managed by Render
+- PostgreSQL database hosted on **Neon**
+- Profile image storage hosted on **AWS S3**
+- Database schema managed through **Alembic** migrations
+- Free-tier deployment configured for portfolio/demo use
 
 ---
 
@@ -115,6 +133,7 @@ A production-oriented full-stack blogging platform built with **FastAPI**, **Pos
 - PostgreSQL
 - AsyncPG
 - Alembic
+- Neon PostgreSQL
 
 ## Cloud Storage & Email
 - AWS S3
@@ -138,7 +157,8 @@ A production-oriented full-stack blogging platform built with **FastAPI**, **Pos
 - Docker
 - Multi-stage container builds
 - uv
-- Reverse-proxy ready configuration
+- Render
+- Neon
 - Health checks
 - Production security headers
 
@@ -255,6 +275,48 @@ The container:
 
 ---
 
+# ☁️ Production Deployment
+
+The application is deployed as a **Docker-based Render Web Service**.
+
+```text
+                    Internet
+                       │
+                       ▼
+                 Render HTTPS
+                       │
+                       ▼
+              ┌─────────────────┐
+              │ FastAPI Docker  │
+              │    Container    │
+              └───────┬─────────┘
+                      │
+             ┌────────┴─────────┐
+             ▼                  ▼
+        Neon PostgreSQL       AWS S3
+        Users + Posts       Profile Images
+```
+
+### Production components
+
+- **Render** — hosts the Dockerized FastAPI application
+- **Neon** — hosts PostgreSQL
+- **AWS S3** — stores uploaded profile pictures
+- **Alembic** — manages database schema migrations
+- **Environment variables** — store production configuration and secrets outside the repository
+
+### Live deployment
+
+https://fastapi-blog-swra.onrender.com/
+
+### Free-tier behaviour
+
+The application is intentionally hosted on Render's **free web-service tier**. Render spins the service down after **15 minutes without incoming traffic**. When somebody visits after the service has been inactive, the instance needs to start again, so the first request may be delayed. Once running, the application works normally.
+
+This makes the deployment suitable for a **portfolio/demo application** without ongoing hosting costs.
+
+---
+
 # 🧪 Running Tests
 
 The project uses **pytest**, **AnyIO**, and **Moto** for automated testing. Tests run against a separate PostgreSQL database and use mocked AWS S3 services so the test suite does not require real S3 operations.
@@ -294,7 +356,7 @@ Create a `.env` file locally. Never commit real credentials to GitHub.
 ```env
 SECRET_KEY=your_secret_key
 
-DATABASE_URL=postgresql+psycopg://user:password@localhost/blog
+DATABASE_URL=postgresql+asyncpg://user:password@localhost/blog
 
 S3_BUCKET_NAME=your_bucket
 S3_REGION=eu-north-1
@@ -502,6 +564,12 @@ Post update and delete operations verify that the authenticated user owns the ta
                          │       Docker        │
                          │ Multi-stage Image   │
                          │ Non-root Runtime    │
+                         └──────────┬──────────┘
+                                    │
+                                    ▼
+                         ┌─────────────────────┐
+                         │       Render        │
+                         │  Free Web Service   │
                          └─────────────────────┘
 ```
 
@@ -520,6 +588,7 @@ Post update and delete operations verify that the authenticated user owns the ta
 - ✅ Image processing and optimisation
 - ✅ AWS S3 integration
 - ✅ PostgreSQL integration
+- ✅ Neon PostgreSQL production database
 - ✅ Async SQLAlchemy
 - ✅ Alembic migrations
 - ✅ Pagination
@@ -535,6 +604,8 @@ Post update and delete operations verify that the authenticated user owns the ta
 - ✅ Non-root container runtime
 - ✅ Locked production dependencies
 - ✅ Docker deployment completed
+- ✅ Render deployment completed
+- ✅ Public live demo available
 
 ---
 
