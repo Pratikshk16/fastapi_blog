@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+asyncpg
+psycopg[binary]
+pydantic
+pydantic-settings
+pwdlib[argon2]
+PyJWT
+python-multipart
+jinja2
+httpx
+google-genai
+pypdf
+Pillow
